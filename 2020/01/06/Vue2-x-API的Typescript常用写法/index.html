@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="Vue中Typescript常用写法[TOC] 使用Ts的原因js是一门弱类型、动态类型的语言，存在类型隐式转换、运行时报错等难以预知的问题；而ts是静态类型、强类型语言，编译时即可报错，类型检查更为严格；使开发更为严谨，错误更易发现；其次，接口的定义以及类型的定义更利于团队中代码的维护，也便于代码的阅读 待添加… 创建项目使用vue-cli3.x创建项目，选择typescript配置项，及cla">
+<meta name="keywords" content="typescript,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.x API的Typescript常用写法">
+<meta property="og:url" content="https://lijing233.github.io/2020/01/06/Vue2-x-API的Typescript常用写法/index.html">
+<meta property="og:site_name" content="Fenta Blog">
+<meta property="og:description" content="Vue中Typescript常用写法[TOC] 使用Ts的原因js是一门弱类型、动态类型的语言，存在类型隐式转换、运行时报错等难以预知的问题；而ts是静态类型、强类型语言，编译时即可报错，类型检查更为严格；使开发更为严谨，错误更易发现；其次，接口的定义以及类型的定义更利于团队中代码的维护，也便于代码的阅读 待添加… 创建项目使用vue-cli3.x创建项目，选择typescript配置项，及cla">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-06T02:41:38.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue2.x API的Typescript常用写法">
+<meta name="twitter:description" content="Vue中Typescript常用写法[TOC] 使用Ts的原因js是一门弱类型、动态类型的语言，存在类型隐式转换、运行时报错等难以预知的问题；而ts是静态类型、强类型语言，编译时即可报错，类型检查更为严格；使开发更为严谨，错误更易发现；其次，接口的定义以及类型的定义更利于团队中代码的维护，也便于代码的阅读 待添加… 创建项目使用vue-cli3.x创建项目，选择typescript配置项，及cla">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lijing233.github.io/2020/01/06/Vue2-x-API的Typescript常用写法/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>Vue2.x API的Typescript常用写法 | Fenta Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fenta Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">welcome to my Blog!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lijing233.github.io/2020/01/06/Vue2-x-API的Typescript常用写法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小芬达">
+      <meta itemprop="description" content="我是练习时长两年半的小芬达，喜欢唱、跳、Rap、篮球">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fenta Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue2.x API的Typescript常用写法
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-06 10:38:39 / 修改时间：10:41:38" itemprop="dateCreated datePublished" datetime="2020-01-06T10:38:39+08:00">2020-01-06</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Vue中Typescript常用写法"><a href="#Vue中Typescript常用写法" class="headerlink" title="Vue中Typescript常用写法"></a>Vue中Typescript常用写法</h1><p>[TOC]</p>
+<h2 id="使用Ts的原因"><a href="#使用Ts的原因" class="headerlink" title="使用Ts的原因"></a>使用Ts的原因</h2><p>js是一门弱类型、动态类型的语言，存在类型隐式转换、运行时报错等难以预知的问题；而ts是静态类型、强类型语言，编译时即可报错，类型检查更为严格；使开发更为严谨，错误更易发现；其次，接口的定义以及类型的定义更利于团队中代码的维护，也便于代码的阅读</p>
+<p>待添加…</p>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>使用vue-cli3.x创建项目，选择typescript配置项，及class写法</p>
+<h2 id="项目迁移"><a href="#项目迁移" class="headerlink" title="项目迁移"></a>项目迁移</h2><blockquote>
+<p>依赖项</p>
+</blockquote>
+<p>npm install <code>@vue/cli-plugin-typescript</code> <code>typescript</code> <code>vue-class-component</code> <code>vue-property-decorator</code></p>
+<blockquote>
+<p> 添加<code>tsconfig.json</code></p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"esnext"</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"esnext"</span>,</span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"jsx"</span>: <span class="string">"preserve"</span>,</span><br><span class="line">    <span class="attr">"importHelpers"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"node"</span>,</span><br><span class="line">    <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"esModuleInterop"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"allowSyntheticDefaultImports"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"sourceMap"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"baseUrl"</span>: <span class="string">"."</span>,</span><br><span class="line">    <span class="attr">"types"</span>: [</span><br><span class="line">      <span class="string">"webpack-env"</span>,</span><br><span class="line">      <span class="string">"jest"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"paths"</span>: &#123;</span><br><span class="line">      <span class="attr">"@/*"</span>: [</span><br><span class="line">        <span class="string">"src/*"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"lib"</span>: [</span><br><span class="line">      <span class="string">"esnext"</span>,</span><br><span class="line">      <span class="string">"dom"</span>,</span><br><span class="line">      <span class="string">"dom.iterable"</span>,</span><br><span class="line">      <span class="string">"scripthost"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"include"</span>: [</span><br><span class="line">    <span class="string">"src/**/*.ts"</span>,</span><br><span class="line">    <span class="string">"src/**/*.tsx"</span>,</span><br><span class="line">    <span class="string">"src/**/*.vue"</span>,</span><br><span class="line">    <span class="string">"tests/**/*.ts"</span>,</span><br><span class="line">    <span class="string">"tests/**/*.tsx"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"exclude"</span>: [</span><br><span class="line">    <span class="string">"node_modules"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>添加对.vue文件的ts声明 </p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> "*.vue" &#123;</span><br><span class="line">  <span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> Vue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>vue2.x迁移 待添加…</p>
+<h2 id="API迁移"><a href="#API迁移" class="headerlink" title="API迁移"></a>API迁移</h2><p>主要写法参考</p>
+<p><a href="https://npm.taobao.org/package/vue-property-decorator" target="_blank" rel="noopener">vue-property-decorator</a></p>
+<p><a href="https://github.com/vuejs/vue-class-component" target="_blank" rel="noopener">vue-class-component</a></p>
+<p><a href="https://cn.vuejs.org/v2/guide/typescript.html#ad" target="_blank" rel="noopener">vue官网</a></p>
+<p><a href="https://es6.ruanyifeng.com/#docs/decorator" target="_blank" rel="noopener">es6装饰器</a></p>
+<p>demo</p>
+<p><a href="https://github.com/lijing233/vue_ts_demo.git" target="_blank" rel="noopener">https://github.com/lijing233/vue_ts_demo.git</a></p>
+<h3 id="全局生命文件"><a href="#全局生命文件" class="headerlink" title="全局生命文件"></a>全局生命文件</h3><p>在cli生成项目中含有一个<code>shims-vue.d.ts</code>文件，因为在ts文件中是无法识别vue文件的，所以添加声明让ts能够识别</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> "*.vue" &#123;</span><br><span class="line">  <span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> Vue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="vue文件写法"><a href="#vue文件写法" class="headerlink" title=".vue文件写法"></a>.vue文件写法</h3><blockquote>
+<p>父组件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div&gt;data: &#123;&#123; myMsg &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&#123;&#123; computedMsg &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;props: &#123;&#123; propMessage &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&lt;input type=&quot;text&quot; v-model=&quot;inpVal&quot; /&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&lt;button @click=&quot;onButtonClick&quot;&gt;click&lt;/button&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;.sync绑定：&#123;&#123; syncData &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;子组件v-model: &#123;&#123; modelData &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;emit val &#123;&#123; sonVal &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&lt;button @click=&quot;activeRef&quot;&gt;active ref&lt;/button&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;mixin: &#123;&#123; mixinValue &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;测试： &#123;&#123; name &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;SonComp</span><br><span class="line">      :syncData.sync=&quot;syncData&quot;</span><br><span class="line">      v-model=&quot;modelData&quot;</span><br><span class="line">      @sonChange=&quot;sonChange&quot;</span><br><span class="line">      ref=&quot;sonComp&quot;</span><br><span class="line">    &gt;&lt;/SonComp&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123;</span><br><span class="line">  Component,</span><br><span class="line">  Prop,</span><br><span class="line">  Vue,</span><br><span class="line">  Watch,</span><br><span class="line">  Provide,</span><br><span class="line">  Ref</span><br><span class="line">&#125; from &quot;vue-property-decorator&quot;;</span><br><span class="line">import SonComp from &quot;./SonComp.vue&quot;;</span><br><span class="line">import MyMixin from &quot;@/mixin/mixin.ts&quot;;</span><br><span class="line">@Component(&#123;</span><br><span class="line">  name: &quot;Test&quot;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    propMessage: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">      default: &quot;Props&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    SonComp</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">export default class extends MyMixin &#123;</span><br><span class="line">  // ref</span><br><span class="line">  @Ref(&quot;sonComp&quot;) readonly sonRef!: SonComp;</span><br><span class="line">  // data数据</span><br><span class="line">  private myMsg = &quot;DataMsg&quot;;</span><br><span class="line">  syncData = &quot;syncData&quot;;</span><br><span class="line">  inpVal = &quot;&quot;;</span><br><span class="line">  modelData = &quot;&quot;;</span><br><span class="line">  sonVal = &quot;&quot;;</span><br><span class="line">  // 两种写法均可</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      name: &quot;lijing&quot;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  // computed</span><br><span class="line">  get computedMsg() &#123;</span><br><span class="line">    return &quot;computed:&quot; + this.myMsg;</span><br><span class="line">  &#125;</span><br><span class="line">  // watch</span><br><span class="line">  @Watch(&quot;inpVal&quot;, &#123; immediate: true, deep: true &#125;)</span><br><span class="line">  onInpValChange(val: String, oldVal: String) &#123;</span><br><span class="line">    console.log(&quot;val :&quot;, val);</span><br><span class="line">    console.log(&quot;oldVal :&quot;, oldVal);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // provid</span><br><span class="line">  @Provide() providData = &quot;pppp&quot;;</span><br><span class="line">  @Provide() providData2 = &quot;dddd&quot;;</span><br><span class="line"></span><br><span class="line">  // lifecycle</span><br><span class="line">  created() &#123;</span><br><span class="line">    console.log(&quot;=====created=====&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mounted() &#123;</span><br><span class="line">    // 全局属性 需要定义</span><br><span class="line">    console.log(&quot;globalVal: &quot;, this.$globalVal);</span><br><span class="line">    console.log(&quot;=====mounted=====&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // methods</span><br><span class="line">  onButtonClick() &#123;</span><br><span class="line">    console.log(&quot;click&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  sonChange(val: any) &#123;</span><br><span class="line">    this.sonVal = val;</span><br><span class="line">  &#125;</span><br><span class="line">  // active ref</span><br><span class="line">  activeRef() &#123;</span><br><span class="line">    this.sonRef.refActFun();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Hook</span><br><span class="line">  beforeRouteEnter(to: any, from: any, next: any) &#123;</span><br><span class="line">    console.log(&quot;beforeRouteEnter&quot;);</span><br><span class="line">    next(); // needs to be called to confirm the navigation</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>子组件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div&gt;SonComp&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;inject &#123;&#123; providData &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;inject &#123;&#123; pdata &#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;binding .sync : &lt;input type=&quot;text&quot; v-model=&quot;syncedName&quot; /&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      binding v-model : &#123;&#123; modelData &#125;&#125;</span><br><span class="line">      &lt;button @click=&quot;$emit(&apos;onModelChange&apos;, modelData + &apos;@&apos;)&quot;&gt;</span><br><span class="line">        change modelData</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&lt;input type=&quot;text&quot; @input=&quot;inpChange&quot; /&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123;</span><br><span class="line">  Component,</span><br><span class="line">  Prop,</span><br><span class="line">  Vue,</span><br><span class="line">  Watch,</span><br><span class="line">  Inject,</span><br><span class="line">  PropSync,</span><br><span class="line">  Model,</span><br><span class="line">  Emit</span><br><span class="line">&#125; from &quot;vue-property-decorator&quot;;</span><br><span class="line">@Component(&#123;</span><br><span class="line">  name: &quot;SonComp&quot;</span><br><span class="line">&#125;)</span><br><span class="line">export default class extends Vue &#123;</span><br><span class="line">  // propSync</span><br><span class="line">  @PropSync(&quot;syncData&quot;, &#123; type: String &#125;) syncedName!: string;</span><br><span class="line">  // model</span><br><span class="line">  @Model(&quot;onModelChange&quot;, &#123; type: String &#125;) readonly modelData!: String;</span><br><span class="line">  // inject</span><br><span class="line">  @Inject(&quot;providData&quot;) readonly providData!: String;</span><br><span class="line">  @Inject(&#123; from: &quot;providData2&quot;, default: &quot;default provid data&quot; &#125;)</span><br><span class="line">  readonly pdata!: String;</span><br><span class="line">  // emit</span><br><span class="line">  @Emit(&quot;sonChange&quot;)</span><br><span class="line">  inpChange(e: any) &#123;</span><br><span class="line">    console.log(e.target.value);</span><br><span class="line">    return e.target.value;</span><br><span class="line">  &#125;</span><br><span class="line">  // method</span><br><span class="line">  refActFun() &#123;</span><br><span class="line">    console.log(&quot;REF active&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line">.container &#123;</span><br><span class="line">  margin: 30px;</span><br><span class="line">  padding: 30px;</span><br><span class="line">  border: 1px solid #dddded;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="mixin"><a href="#mixin" class="headerlink" title="mixin"></a>mixin</h3><p><code>mixin.ts</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"><span class="keyword">import</span> Component <span class="keyword">from</span> <span class="string">"vue-class-component"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> MyMixin <span class="keyword">extends</span> Vue &#123;</span><br><span class="line">  mixinValue = <span class="string">"###mixinValue###"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>index.vue</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import MyMixin from &quot;@/mixin/mixin.ts&quot;;</span><br><span class="line">@Component(&#123;</span><br><span class="line">  name: &quot;Test&quot;,</span><br><span class="line">&#125;)</span><br><span class="line">export default class extends MyMixin &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Router-Hooks"><a href="#Router-Hooks" class="headerlink" title="Router Hooks"></a>Router Hooks</h3><p>如要使用路由钩子 beforeRouteEnter 、beforeRouteLeave、beforeRouteUpdate需要在入口注册，否则将被认为是普通函数</p>
+<p><code>class-component-hooks.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// class-component-hooks.js</span></span><br><span class="line"><span class="keyword">import</span> Component <span class="keyword">from</span> <span class="string">"vue-class-component"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Register the router hooks with their names</span></span><br><span class="line">Component.registerHooks([</span><br><span class="line">  <span class="string">"beforeRouteEnter"</span>,</span><br><span class="line">  <span class="string">"beforeRouteLeave"</span>,</span><br><span class="line">  <span class="string">"beforeRouteUpdate"</span> <span class="comment">// for vue-router 2.2+</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p><code>main.ts</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./utils/class-component-hooks'</span></span><br></pre></td></tr></table></figure>
+<h3 id="挂载在vue原型上的属性或方法"><a href="#挂载在vue原型上的属性或方法" class="headerlink" title="挂载在vue原型上的属性或方法"></a>挂载在vue原型上的属性或方法</h3><p>对于一些全局配置或封装的ajax方法，通常会挂载到vue的原型上，但在ts中必须提前声明再使用</p>
+<p>src/types/vued.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 确保在声明补充的类型之前导入 'vue'</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 定制一个文件，设置你想要补充的类型</span></span><br><span class="line"><span class="comment">//    在 types/vue.d.ts 里 Vue 有构造函数类型</span></span><br><span class="line"><span class="comment">// node_modules/vue/types/vue</span></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> 'vue/types/vue' &#123;</span><br><span class="line"><span class="comment">// 3. 声明为 Vue 补充的东西</span></span><br><span class="line">  <span class="keyword">interface</span> Vue &#123;</span><br><span class="line">    $globalVal: <span class="built_in">string</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main.ts</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$globalVal = <span class="string">"999"</span></span><br></pre></td></tr></table></figure>
+<h2 id="vuex-迁移"><a href="#vuex-迁移" class="headerlink" title="vuex 迁移"></a>vuex 迁移</h2><p><a href="https://npm.taobao.org/package/vuex-module-decorators" target="_blank" rel="noopener">vuex-module-decorators</a></p>
+<p><a href="https://npm.taobao.org/package/vuex-class" target="_blank" rel="noopener">vuex-class</a></p>
+<p>待添加…</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/typescript/" rel="tag"># typescript</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/01/git/" rel="next" title="git 常用命令">
+                <i class="fa fa-chevron-left"></i> git 常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="小芬达">
+  
+  <p class="site-author-name" itemprop="name">小芬达</p>
+  <div class="site-description motion-element" itemprop="description">我是练习时长两年半的小芬达，喜欢唱、跳、Rap、篮球</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue中Typescript常用写法"><span class="nav-number">1.</span> <span class="nav-text">Vue中Typescript常用写法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Ts的原因"><span class="nav-number">1.1.</span> <span class="nav-text">使用Ts的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目"><span class="nav-number">1.2.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目迁移"><span class="nav-number">1.3.</span> <span class="nav-text">项目迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API迁移"><span class="nav-number">1.4.</span> <span class="nav-text">API迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局生命文件"><span class="nav-number">1.4.1.</span> <span class="nav-text">全局生命文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue文件写法"><span class="nav-number">1.4.2.</span> <span class="nav-text">.vue文件写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mixin"><span class="nav-number">1.4.3.</span> <span class="nav-text">mixin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Router-Hooks"><span class="nav-number">1.4.4.</span> <span class="nav-text">Router Hooks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载在vue原型上的属性或方法"><span class="nav-number">1.4.5.</span> <span class="nav-text">挂载在vue原型上的属性或方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex-迁移"><span class="nav-number">1.5.</span> <span class="nav-text">vuex 迁移</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小芬达</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
