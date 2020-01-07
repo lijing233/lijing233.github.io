@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="Js隐式转换Js数据类型 基本类型  undefined  null  String  Number  Boolean  Symbol  引用类型  Object Array Function Date 隐式转换方法1.ToPrimitivetoPrimitive(value, type[number, string])  当需要将引用类型转换为基本类型时,则会调用toPrimitive来进行转换">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Js隐式转换">
+<meta property="og:url" content="https://lijing233.github.io/2020/01/07/Js隐式转换/index.html">
+<meta property="og:site_name" content="Fenta Blog">
+<meta property="og:description" content="Js隐式转换Js数据类型 基本类型  undefined  null  String  Number  Boolean  Symbol  引用类型  Object Array Function Date 隐式转换方法1.ToPrimitivetoPrimitive(value, type[number, string])  当需要将引用类型转换为基本类型时,则会调用toPrimitive来进行转换">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-07T10:41:56.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Js隐式转换">
+<meta name="twitter:description" content="Js隐式转换Js数据类型 基本类型  undefined  null  String  Number  Boolean  Symbol  引用类型  Object Array Function Date 隐式转换方法1.ToPrimitivetoPrimitive(value, type[number, string])  当需要将引用类型转换为基本类型时,则会调用toPrimitive来进行转换">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lijing233.github.io/2020/01/07/Js隐式转换/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>Js隐式转换 | Fenta Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fenta Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">welcome to my Blog!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lijing233.github.io/2020/01/07/Js隐式转换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小芬达">
+      <meta itemprop="description" content="我是练习时长两年半的小芬达，喜欢唱、跳、Rap、篮球">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fenta Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Js隐式转换
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-07 18:41:24 / 修改时间：18:41:56" itemprop="dateCreated datePublished" datetime="2020-01-07T18:41:24+08:00">2020-01-07</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Js隐式转换"><a href="#Js隐式转换" class="headerlink" title="Js隐式转换"></a>Js隐式转换</h1><h2 id="Js数据类型"><a href="#Js数据类型" class="headerlink" title="Js数据类型"></a>Js数据类型</h2><blockquote>
+<p><strong>基本类型</strong></p>
+</blockquote>
+<p>undefined  null  String  Number  Boolean  Symbol</p>
+<blockquote>
+<p><strong>引用类型</strong></p>
+</blockquote>
+<p>Object Array Function Date</p>
+<h2 id="隐式转换方法"><a href="#隐式转换方法" class="headerlink" title="隐式转换方法"></a>隐式转换方法</h2><h3 id="1-ToPrimitive"><a href="#1-ToPrimitive" class="headerlink" title="1.ToPrimitive"></a>1.ToPrimitive</h3><p>toPrimitive(value, type[number, string])  当需要将引用类型转换为基本类型时,则会调用toPrimitive来进行转换</p>
+<p>params: value 需要转换的值  type期望转换的类型(默认值为number,对象为Date类型，则PreferredType被设置为String)</p>
+<p><strong>type: number</strong></p>
+<blockquote>
+<p>1、如果输入的值已经是一个原始值，则直接返回它<br>2、否则，如果输入的值是一个对象，则调用该对象的valueOf()方法，<br>如果valueOf()方法的返回值是一个原始值，则返回这个原始值。<br>3、否则，调用这个对象的toString()方法，如果toString()方法返回的是一个原始值，则返回这个原始值。<br>4、否则，抛出TypeError异常。</p>
+</blockquote>
+<p><strong>type:string</strong></p>
+<blockquote>
+<p>1、如果输入的值已经是一个原始值，则直接返回它<br>2、否则，调用这个对象的toString()方法，如果toString()方法返回的是一个原始值，则返回这个原始值。<br>3、否则，如果输入的值是一个对象，则调用该对象的valueOf()方法，<br>如果valueOf()方法的返回值是一个原始值，则返回这个原始值。<br>4、否则，抛出TypeError异常。</p>
+</blockquote>
+<h4 id="ValueOf"><a href="#ValueOf" class="headerlink" title="ValueOf"></a>ValueOf</h4><p>1.Number String Boolean 三种基本类型调用valueOf 返回其值</p>
+<p>2.Date</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">date.valueOf() <span class="comment">// 1577791647751</span></span><br></pre></td></tr></table></figure>
+<p>3.引用类型调用会返回其本身</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">a.valueOf() === a; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Object</span>(&#123;&#125;);</span><br><span class="line">b.valueOf() === b; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>4.特殊情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">	toString: function()&#123;</span><br><span class="line">		return 123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h4><p>1.Number、Boolean、String、Array、Date、RegExp、Function</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="string">'123sd'</span>);</span><br><span class="line">num.toString(); <span class="comment">// 'NaN'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'12df'</span>);</span><br><span class="line">str.toString(); <span class="comment">// '12df'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bool = <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="string">'fd'</span>);</span><br><span class="line">bool.toString(); <span class="comment">// 'true'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">arr.toString(); <span class="comment">// '1,2'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">d.toString(); <span class="comment">// "Wed Oct 11 2017 08:00:00 GMT+0800 (中国标准时间)"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">func.toString(); <span class="comment">// "function () &#123;&#125;"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>()</span><br><span class="line">reg.toString() <span class="comment">// "/(?:)/"</span></span><br></pre></td></tr></table></figure>
+<p>2.Object Math</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>(&#123;&#125;);</span><br><span class="line">obj.toString(); <span class="comment">// "[object Object]"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Math</span>.toString(); <span class="comment">// "[object Math]"</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-ToNumber"><a href="#2-ToNumber" class="headerlink" title="2.ToNumber"></a>2.ToNumber</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>undefined</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>null</td>
+<td>+0</td>
+</tr>
+<tr>
+<td>布尔值</td>
+<td>true转换1，false转换为+0</td>
+</tr>
+<tr>
+<td>数字</td>
+<td>无须转换</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>有字符串解析为数字，例如：‘324’转换为324，‘qwer’转换为NaN  <strong>‘’转为0</strong></td>
+</tr>
+<tr>
+<td>对象(obj)</td>
+<td>先进行 ToPrimitive(obj, Number)转换得到原始值，在进行ToNumber转换为数字</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-ToString"><a href="#3-ToString" class="headerlink" title="3.ToString"></a>3.ToString</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>undefined</td>
+<td>‘undefined’</td>
+</tr>
+<tr>
+<td>null</td>
+<td>‘null’</td>
+</tr>
+<tr>
+<td>布尔值</td>
+<td>转换为’true’ 或 ‘false’</td>
+</tr>
+<tr>
+<td>数字</td>
+<td>数字转换字符串，比如：1.765转为’1.765’</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>无须转换</td>
+</tr>
+<tr>
+<td>对象(obj)</td>
+<td>先进行 ToPrimitive(obj, String)转换得到原始值，在进行ToString转换为字符串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="隐式转换常见场景"><a href="#隐式转换常见场景" class="headerlink" title="隐式转换常见场景"></a>隐式转换常见场景</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[] 转为字符串是 <span class="string">""</span>       <span class="comment">// String([]) 返回""</span></span><br><span class="line">[] 转为数字是 <span class="number">0</span>            <span class="comment">// Number([]) 返回0</span></span><br><span class="line">[] 转为布尔值是 <span class="literal">true</span>        <span class="comment">// Boolean([]) 返回true</span></span><br><span class="line"><span class="literal">true</span> 转为数字是 <span class="number">1</span>       <span class="comment">// Number(true) 返回1</span></span><br><span class="line"><span class="literal">false</span> 转为数字是 <span class="number">0</span>      <span class="comment">// Number(false) 返回0</span></span><br></pre></td></tr></table></figure>
+<h3 id="1"><a href="#1" class="headerlink" title="1. +"></a>1. +</h3><p>因为string存在 + 运算, number 同样存在 所以加运算一般会出现隐式特殊的隐式转换,引用类型先转换为基本类型</p>
+<p><strong>string + others (others隐式的转为字符串)</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'str-'</span> + <span class="string">''</span> <span class="comment">// str-</span></span><br><span class="line"><span class="string">'str-'</span> + [] <span class="comment">// str</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="string">'1'</span> <span class="comment">// "str-1"</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="number">1</span> <span class="comment">// "str-1"</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="literal">false</span> <span class="comment">// "str-false"</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="literal">true</span> <span class="comment">// "str-true"</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="literal">null</span> <span class="comment">// "str-null"</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="literal">undefined</span> <span class="comment">// "str-undefined"</span></span><br><span class="line"><span class="string">'str-'</span> + <span class="literal">NaN</span> <span class="comment">// "str-NaN"</span></span><br><span class="line"><span class="string">'str-'</span> + &#123;&#125; <span class="comment">// "str-[object Object]"</span></span><br><span class="line"><span class="string">'str-'</span> + &#123;<span class="attr">a</span>:<span class="number">1</span>&#125; <span class="comment">// "str-[object Object]"</span></span><br></pre></td></tr></table></figure>
+<p>其他数字运算符直接将非number类型转为number进行计算即可</p>
+<p>eg:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;&#125;</span><br><span class="line"><span class="number">1</span> + obj  <span class="comment">// "1[object Object]"</span></span><br><span class="line"></span><br><span class="line">&#123;&#125; + <span class="number">1</span> <span class="comment">// 直接控制台计算此结果为 1  因为在console里&#123;&#125;被认为是一个code block </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="number">2</span> * <span class="string">''</span> <span class="comment">// 0</span></span><br><span class="line"><span class="number">2</span> * [] <span class="comment">// 0</span></span><br><span class="line"><span class="number">2</span> * <span class="literal">false</span> <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="number">2</span> * <span class="string">'1'</span> <span class="comment">// 2</span></span><br><span class="line"><span class="number">2</span> * [<span class="number">1</span>] <span class="comment">// 2</span></span><br><span class="line"><span class="number">2</span> * <span class="literal">true</span> <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="number">2</span> * &#123;&#125; <span class="comment">// NaN</span></span><br><span class="line"><span class="number">2</span> * &#123;<span class="attr">a</span>:<span class="number">1</span>&#125; <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-双方类型不同"><a href="#2-双方类型不同" class="headerlink" title="2. == 双方类型不同"></a>2. == 双方类型不同</h3><ol>
+<li><strong>null  undefined</strong>之间比较为true, 和其他类型比较为false</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">undefined</span> == <span class="literal">undefined</span> <span class="comment">// true</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">null</span> <span class="comment">// true</span></span><br><span class="line"><span class="literal">undefined</span> == <span class="literal">null</span> <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">NaN</span> == <span class="literal">NaN</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong>string number 将字符串转为数字</strong></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> == <span class="string">''</span> <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">'0'</span> <span class="comment">// true</span></span><br><span class="line"><span class="number">1</span> == <span class="string">'1'</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><strong>其中一个是true或false,将其转为1或0</strong></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>] == <span class="literal">true</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><strong>对象 == （string/number）将对象转为原始值</strong></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(&#123;&#125; == <span class="string">'[object Object]'</span>) &#123;<span class="built_in">console</span>.log(<span class="string">'ss'</span>)&#125; <span class="comment">// ss</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li><strong>其他均不相等</strong></li>
+</ol>
+<h3 id="3-if-将条件转为boolean"><a href="#3-if-将条件转为boolean" class="headerlink" title="3.if() 将条件转为boolean"></a>3.if() 将条件转为boolean</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="literal">false</span>) <span class="built_in">console</span>.log(<span class="number">2333</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="string">''</span>) <span class="built_in">console</span>.log(<span class="number">2333</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">null</span>) <span class="built_in">console</span>.log(<span class="number">2333</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">undefined</span>) <span class="built_in">console</span>.log(<span class="number">2333</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">NaN</span>) <span class="built_in">console</span>.log(<span class="number">2333</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="literal">true</span>) <span class="built_in">console</span>.log(<span class="number">2333</span>) <span class="comment">// 2333</span></span><br><span class="line"><span class="keyword">if</span>(<span class="string">'test'</span>) <span class="built_in">console</span>.log(<span class="number">2333</span>) <span class="comment">// 2333</span></span><br><span class="line"><span class="keyword">if</span>([]) <span class="built_in">console</span>.log(<span class="number">2333</span>) <span class="comment">// 2333</span></span><br><span class="line"><span class="keyword">if</span>(&#123;&#125;) <span class="built_in">console</span>.log(<span class="number">2333</span>) <span class="comment">// 2333</span></span><br></pre></td></tr></table></figure>
+<h2 id="tip"><a href="#tip" class="headerlink" title="tip"></a>tip</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>([] == <span class="literal">false</span>)&#123;<span class="built_in">console</span>.log(<span class="string">'a'</span>)&#125;</span><br><span class="line"><span class="keyword">if</span>(&#123;&#125; == <span class="literal">false</span>)&#123;<span class="built_in">console</span>.log(<span class="string">'b'</span>)&#125;</span><br><span class="line"><span class="keyword">if</span>([] == &#123;&#125;)&#123;<span class="built_in">console</span>.log(<span class="string">'c'</span>)&#125;</span><br><span class="line"><span class="keyword">if</span>([])&#123;<span class="built_in">console</span>.log(<span class="string">'d'</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/06/Vue2-x-API的Typescript常用写法/" rel="next" title="Vue2.x API的Typescript常用写法">
+                <i class="fa fa-chevron-left"></i> Vue2.x API的Typescript常用写法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="小芬达">
+  
+  <p class="site-author-name" itemprop="name">小芬达</p>
+  <div class="site-description motion-element" itemprop="description">我是练习时长两年半的小芬达，喜欢唱、跳、Rap、篮球</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Js隐式转换"><span class="nav-number">1.</span> <span class="nav-text">Js隐式转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Js数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">Js数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐式转换方法"><span class="nav-number">1.2.</span> <span class="nav-text">隐式转换方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ToPrimitive"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.ToPrimitive</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ValueOf"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">ValueOf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">toString</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-ToNumber"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.ToNumber</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-ToString"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.ToString</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐式转换常见场景"><span class="nav-number">1.3.</span> <span class="nav-text">隐式转换常见场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. +</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-双方类型不同"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. == 双方类型不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-if-将条件转为boolean"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.if() 将条件转为boolean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tip"><span class="nav-number">1.4.</span> <span class="nav-text">tip</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小芬达</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
