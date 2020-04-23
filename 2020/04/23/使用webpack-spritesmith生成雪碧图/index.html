@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="使用webpack-spritesmith生成雪碧图插件官网 webpack-spritesmith 安装 1npm install webpack-spritesmith --save vue.config.js配置 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495">
+<meta name="keywords" content="css,scss">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用webpack-spritesmith生成雪碧图">
+<meta property="og:url" content="https://lijing233.github.io/2020/04/23/使用webpack-spritesmith生成雪碧图/index.html">
+<meta property="og:site_name" content="Fenta Blog">
+<meta property="og:description" content="使用webpack-spritesmith生成雪碧图插件官网 webpack-spritesmith 安装 1npm install webpack-spritesmith --save vue.config.js配置 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-23T12:09:19.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用webpack-spritesmith生成雪碧图">
+<meta name="twitter:description" content="使用webpack-spritesmith生成雪碧图插件官网 webpack-spritesmith 安装 1npm install webpack-spritesmith --save vue.config.js配置 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lijing233.github.io/2020/04/23/使用webpack-spritesmith生成雪碧图/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>使用webpack-spritesmith生成雪碧图 | Fenta Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fenta Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">welcome to my Blog!</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lijing233.github.io/2020/04/23/使用webpack-spritesmith生成雪碧图/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小芬达">
+      <meta itemprop="description" content="我是练习时长两年半的小芬达，喜欢唱、跳、Rap、篮球">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fenta Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用webpack-spritesmith生成雪碧图
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-23 20:08:37 / 修改时间：20:09:19" itemprop="dateCreated datePublished" datetime="2020-04-23T20:08:37+08:00">2020-04-23</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="使用webpack-spritesmith生成雪碧图"><a href="#使用webpack-spritesmith生成雪碧图" class="headerlink" title="使用webpack-spritesmith生成雪碧图"></a>使用webpack-spritesmith生成雪碧图</h1><p><strong><a href="https://github.com/mixtur/webpack-spritesmith" target="_blank" rel="noopener">插件官网 webpack-spritesmith</a></strong></p>
+<p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack-spritesmith --save</span><br></pre></td></tr></table></figure>
+<p>vue.config.js配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> SpritesmithPlugin = <span class="built_in">require</span>(<span class="string">'webpack-spritesmith'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> templateFunction = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> getRem = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> base = <span class="number">36</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseInt</span>(val)/base + <span class="string">'rem'</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> shared = <span class="string">'@mixin icon &#123; background-image: url(I);background-size: W H;&#125;'</span>.replace(<span class="string">'I'</span>, data.sprites[<span class="number">0</span>].image).replace(<span class="string">'W'</span>, getRem(data.spritesheet.width))</span><br><span class="line">    .replace(<span class="string">'H'</span>, getRem(data.spritesheet.height))</span><br><span class="line">  <span class="keyword">var</span> perSprite = data.sprites.map(<span class="function"><span class="keyword">function</span> (<span class="params">sprite</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'@mixin icon-N &#123; width: W; height: H; background-position: X Y; &#125;'</span></span><br><span class="line">      .replace(<span class="string">'N'</span>, sprite.name)</span><br><span class="line">      .replace(<span class="string">'W'</span>, getRem(sprite.width))</span><br><span class="line">      .replace(<span class="string">'H'</span>, getRem(sprite.height))</span><br><span class="line">      .replace(<span class="string">'X'</span>, getRem(sprite.offset_x))</span><br><span class="line">      .replace(<span class="string">'Y'</span>, getRem(sprite.offset_y));</span><br><span class="line">  &#125;).join(<span class="string">'\n'</span>);</span><br><span class="line">  <span class="keyword">return</span> shared + <span class="string">'\n'</span> + perSprite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    configureWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">        config.resolve.modules.push(<span class="string">'./src/images'</span>)</span><br><span class="line">        config.plugins.push(</span><br><span class="line">          <span class="keyword">new</span> SpritesmithPlugin(&#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            需要合成雪碧图的目标文件夹</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            src: &#123;</span><br><span class="line">              cwd: path.resolve(__dirname, <span class="string">'./src/images/icon'</span>),</span><br><span class="line">              glob: <span class="string">'*.png'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// 输出雪碧图文件及样式文件</span></span><br><span class="line">            target: &#123;</span><br><span class="line">              image: path.resolve(__dirname, <span class="string">'./src/images/sprite.webp'</span>),</span><br><span class="line">              css: [</span><br><span class="line">                [path.resolve(__dirname, <span class="string">'./src/common/scss/sprite.scss'</span>), &#123;</span><br><span class="line">                  <span class="comment">// 引用自己的模板</span></span><br><span class="line">                  format: <span class="string">'function_based_template'</span></span><br><span class="line">                &#125;],</span><br><span class="line">              ]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// 自定义css处理模板</span></span><br><span class="line">            customTemplates: &#123;</span><br><span class="line">              <span class="string">'function_based_template'</span>: templateFunction,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// 样式文件中调用雪碧图地址</span></span><br><span class="line">            apiOptions: &#123;</span><br><span class="line">              cssImageRef: <span class="string">'~@/images/sprite.png'</span>,</span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// 图片边距</span></span><br><span class="line">            spritesmithOptions: &#123;</span><br><span class="line">              padding: <span class="number">20</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打包后生成：</p>
+<p>src/common/scss/sprite.scss</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> icon &#123; <span class="attribute">background-image</span>: url(~@/images/sprite.png);<span class="attribute">background-size</span>: <span class="number">4.555555555555555rem</span> <span class="number">4.277777777777778rem</span>;&#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-arrow &#123; <span class="attribute">width</span>: <span class="number">0.6666666666666666rem</span>; <span class="attribute">height</span>: <span class="number">0.6666666666666666rem</span>; <span class="attribute">background-position</span>: -<span class="number">3.888888888888889rem</span> <span class="number">0rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-back &#123; <span class="attribute">width</span>: <span class="number">1.3888888888888888rem</span>; <span class="attribute">height</span>: <span class="number">1.3888888888888888rem</span>; <span class="attribute">background-position</span>: <span class="number">0rem</span> <span class="number">0rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-circle &#123; <span class="attribute">width</span>: <span class="number">0.6666666666666666rem</span>; <span class="attribute">height</span>: <span class="number">0.6666666666666666rem</span>; <span class="attribute">background-position</span>: -<span class="number">3.888888888888889rem</span> -<span class="number">1.2222222222222223rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-close &#123; <span class="attribute">width</span>: <span class="number">1.3888888888888888rem</span>; <span class="attribute">height</span>: <span class="number">1.3888888888888888rem</span>; <span class="attribute">background-position</span>: -<span class="number">1.9444444444444444rem</span> <span class="number">0rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-cur &#123; <span class="attribute">width</span>: <span class="number">0.6111111111111112rem</span>; <span class="attribute">height</span>: <span class="number">0.6111111111111112rem</span>; <span class="attribute">background-position</span>: <span class="number">0rem</span> -<span class="number">3.6666666666666665rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-question &#123; <span class="attribute">width</span>: <span class="number">0.7777777777777778rem</span>; <span class="attribute">height</span>: <span class="number">0.7777777777777778rem</span>; <span class="attribute">background-position</span>: -<span class="number">1.7222222222222223rem</span> -<span class="number">1.9444444444444444rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-selected &#123; <span class="attribute">width</span>: <span class="number">1.1666666666666667rem</span>; <span class="attribute">height</span>: <span class="number">1.1666666666666667rem</span>; <span class="attribute">background-position</span>: <span class="number">0rem</span> -<span class="number">1.9444444444444444rem</span>; &#125;</span><br><span class="line">@<span class="keyword">mixin</span> icon-watch &#123; <span class="attribute">width</span>: <span class="number">0.6666666666666666rem</span>; <span class="attribute">height</span>: <span class="number">0.6666666666666666rem</span>; <span class="attribute">background-position</span>: -<span class="number">3.888888888888889rem</span> -<span class="number">2.4444444444444446rem</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p>src/images/sprite.png</p>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@import &apos;@/common/scss/sprite.scss&apos;;</span><br><span class="line">.icon-continer &#123;</span><br><span class="line">	@include icon;</span><br><span class="line">    @include icon-back;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+            <a href="/tags/scss/" rel="tag"># scss</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/18/手写call-bind-applay/" rel="next" title="手写call,bind,applay">
+                <i class="fa fa-chevron-left"></i> 手写call,bind,applay
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="小芬达">
+  
+  <p class="site-author-name" itemprop="name">小芬达</p>
+  <div class="site-description motion-element" itemprop="description">我是练习时长两年半的小芬达，喜欢唱、跳、Rap、篮球</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用webpack-spritesmith生成雪碧图"><span class="nav-number">1.</span> <span class="nav-text">使用webpack-spritesmith生成雪碧图</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小芬达</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
