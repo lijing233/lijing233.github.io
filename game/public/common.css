@@ -1,0 +1,28 @@
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,del,dfn,em,img,ins,kbd,q,samp,small,strong,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,table,tbody,tfoot,thead,tr,th,td,article,aside,footer,header,nav,section {
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+	font-size:100%;
+	vertical-align:baseline;
+	background:transparent
+}
+body {
+	-webkit-text-size-adjust:none;
+	font-family:sans-serif
+}
+
+#mask {
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(255, 255, 255, .6);
+	display: none;
+	justify-content: center;
+	align-items: center;
+	font-size: 2.717391rem /* 20/7.36 */;
+	color: #333;
+	z-index: 10000;
+}
